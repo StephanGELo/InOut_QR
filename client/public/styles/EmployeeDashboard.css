@@ -1,0 +1,61 @@
+/* EmployeeDashboard.css */
+.employee-dashboard {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .logo {
+    max-width: 50px;
+  }
+  
+  .user-profile {
+    text-align: right;
+  }
+  
+  .attendance-section,
+  .timesheet-section,
+  .notifications-section {
+    margin: 20px 0;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  h2 {
+    font-size: 1.2em;
+    color: #333;
+  }
+  
+  button {
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  .dashboard-footer {
+    font-size: 0.8em;
+    color: #666;
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  .dashboard-footer a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
