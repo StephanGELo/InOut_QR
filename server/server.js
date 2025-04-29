@@ -18,9 +18,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json()); //  for POST requests
 app.use(express.static('public'));
 
-// Health check route
-app.get('/', (req, res) => {
-  res.send('Server is up and running!');
+// check route status
+app.get('/api/check', (req, res) => {
+  res.status(200).json({ status: 'OK', message: 'Server is running properly' });
 });
 
 // Use routes (to be added later)
