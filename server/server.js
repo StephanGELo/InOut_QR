@@ -5,6 +5,9 @@ import cors from 'cors';
 import env from 'dotenv';
 import pool from './config/db.js';
 
+import adminRoutes from './routes/adminRoutes.js';
+import employeeRoutes from './routes/employeeRoutes.js';
+
 
 // Import routes 
 
@@ -19,6 +22,9 @@ app.use(cors()); // <-- Allow frontend to connect to backend
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json()); //  for POST requests
 app.use(express.static('public'));
+
+app.use('/api/admin', adminRoutes);
+app.use('/api/employee', employeeRoutes);
 
 // check route status
 app.get('/api/check', (req, res) => {
