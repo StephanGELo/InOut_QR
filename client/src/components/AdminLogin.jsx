@@ -4,19 +4,37 @@ import { useNavigate } from "react-router-dom";
 import "/public/styles/login.css";
 
 function AdminLogin() {
-    const [ username, setUsername ] = useState("");
+    const [ email, setEmail ] = useState("");
     const [ password, setPassword ] = useState("");
+    const  [message, setMessage ] = useState("");
+
     const navigate = useNavigate();
 
-    function handleLogin(e) {
+    const handleLogin = async (e) => {
         e.preventDefault();
-        if(username === "admin" && password === "123Adminpass") {
-            console.log("Login's successful");
-            navigate("/admin-dashboard");
-        } else {
-            alert("Login unsuccessful");
-        }
-    }
+
+        try{
+            const result = await fetch("/api/admin/login",{
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ email, password}),
+            });
+            const data = await result.json();
+            if (result.status === 200) {
+                setMessage("Login Successful");
+                // Optionallu, redirect to admin dashboard or save user info in local storage
+                navigate("/admin-dashboard");
+            } else {
+                setMessage(`❌ ${data.error} - Please try again`);
+                // Clear the password field
+                setPassword("");
+            }
+        } catch(err) {
+            setMessage(`❌ Server Error - Please try again`);
+        };
+    };
 
     return (
         <div className="login">
@@ -29,12 +47,12 @@ function AdminLogin() {
             </header>
 
             <form onSubmit={handleLogin} className="login-form">
-                <label htmlFor="username">Username or email</label>
+                <label htmlFor="email">Email</label>
                 <input 
                     type="text"
-                    id="username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
+                    id="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     required
                 />
                 <label htmlFor="password">Password</label>
