@@ -31,4 +31,16 @@ router.post('/login', async (req, res) => {
     res.status(500).json({ error: ' Server error'});
   };
 });
+
+// Get all admins
+router.get('/employees', async(req, res) => {
+  try {
+    const query = "SELECT id, name, email FROM users WHERE role ='employee' ORDER BY id ASC";
+    const result = await pool.query(query);
+    res.status(200).json(result.rows);
+  } catch(err) {
+    res.status(500).json({error: 'Failed to fetch employees'});
+  };
+});
+
 export default router;
