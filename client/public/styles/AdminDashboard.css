@@ -27,7 +27,7 @@
     cursor: pointer;
   }
   
-  .overview-section, .attendance-logs-section, .qr-management-section, .settings-section {
+  .overview-section, .attendance-logs-section, .qr-management-section, .employee-management-section {
     background-color: #fff;
     padding: 15px;
     margin: 15px 0;
