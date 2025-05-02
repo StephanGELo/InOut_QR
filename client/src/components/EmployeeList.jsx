@@ -1,5 +1,6 @@
 // EmployeeList.jsx
 import { useEffect, useState } from "react";
+import { toast } from 'react-toastify';
 import "../../public/styles/EmployeeList.css";
 
 function EmployeeList() {
@@ -7,7 +8,6 @@ function EmployeeList() {
   const [ name, setName ] = useState("");
   const [ email, setEmail ] = useState("");
   const [ password, setPassword ] = useState("");
-  const [ message, setMessage ] = useState("");
 
 
   const fetchEmployees = async () => {
@@ -16,7 +16,7 @@ function EmployeeList() {
       const data = await res.json();
       setEmployees(data);
     } catch(err) {
-      console.error('Error fetching employees: ', err);
+      toast.error('Error fetching employees: ');
     }
   };
 
@@ -26,9 +26,9 @@ function EmployeeList() {
 
   const handleAddEmployee = async(e) => {
     e.preventDefault();
-    setMessage("");
+   
     if (!name || !email || !password) {
-      setMessage("Please fill in all fields");
+      toast.error("Please fill in all fields");
       return;
     }
     try {
@@ -41,16 +41,16 @@ function EmployeeList() {
       const data = await res.json();
 
       if (res.ok) {
-        setMessage(`✅ Employee ${data.name} added successfully`);
+        toast.success(`✅ Employee ${data.name} added successfully`);
         setName("");
         setEmail("");
         setPassword("");
         fetchEmployees();  // Refresh the employee list
       } else {
-        setMessage(`❌ ${data.error}`);
+        toast.error(`❌ ${data.error}`);
       }
     } catch(err) {
-      setMessage(`❌ Error: ${err.message}`);
+        toast.error(`❌ Error: ${err.message}`);
     };
   };
 
@@ -89,8 +89,6 @@ function EmployeeList() {
         
         <button type="submit">Add Employee</button>
       </form>
-
-      <p>{message}</p>
 
       <h4>List of employees</h4>
       <ul>
