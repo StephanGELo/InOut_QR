@@ -1,3 +1,4 @@
+// adminRoutes.js
 import express from 'express';
 import bcrypt from 'bcrypt';
 import pool from '../config/db.js';
@@ -57,12 +58,12 @@ router.post('/employees', async (req, res) => {
     const checkUserQuery = 'SELECT * FROM users WHERE email = $1';
     const checkUserResult = await pool.query(checkUserQuery, [email]);
     if (checkUserResult.rows.length > 0) {
-      return res.status(400).hjson({ error: "User already exists."});
+      return res.status(400).json({ error: "User already exists."});
     } 
     // Hash the password
     const hashedPassword = await bcrypt.hash(password, saltRounds);
     // Insert new user into the database
-    const insertUserQuery = 'INSERT INTO users (name, email, password, role) VALUES ($1, $2, $3, $4) RETURNING id, email';
+    const insertUserQuery = 'INSERT INTO users (name, email, password, role) VALUES ($1, $2, $3, $4) RETURNING id, name, email';
     const insertUserResult = await pool.query(insertUserQuery, [name, email, hashedPassword, 'employee']);
     res.status(201).json(insertUserResult.rows[0]);
   } catch (err) {
