@@ -11,6 +11,7 @@ router.get('/test', (req, res) =>{
   res.send("Admin API is working");
 });
 
+/////***GET REQUESTS***//////
 // Get all admins
 router.get('/employees', async(req, res) => {
   try {
@@ -22,6 +23,8 @@ router.get('/employees', async(req, res) => {
   };
 });
 
+
+//////***POST REQUESTS***//////
 // Admin login route
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
@@ -71,5 +74,19 @@ router.post('/employees', async (req, res) => {
   };
 });
 
+//////***DELETE***//////
+router.delete('/employees/:id', async( req, res) => {
+  const { id } = req.params;
+  try {
+    const deleteQuery = 'DELETE FROM users WHERE id = $1 AND role =  $2';
+    const deleteResult = await pool.query(deleteQuery, [ id, 'employee' ] );
+    if (deleteResult.rowCount === 0) {
+      return res.status(404).json({ error: 'Employee not fount or not an employee'});
+    }
+    res.status(200).json({ message: 'Employee deleted Sucessfully'});
+  } catch(err) {
+    res.status(500).json({ error: 'Failed to delete employee'});
+  };
+});
 
 export default router;
