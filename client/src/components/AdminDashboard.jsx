@@ -8,8 +8,15 @@ import '/public/styles/AdminDashboard.css';
 
 function AdminDashboard() {
   const [attendanceLogs, setAttendanceLogs] = useState([]); // Sample state for logs
+  const [ summary, setSummary ] = useState({
+    totalEmployees: 0,
+    present: 0,
+    absentees: 0,
+    attendanceRate: 0
+  });
+  
   const navigate = useNavigate();
-
+  
   const fetchAttendanceLogs = async () => {
     try {
       const res = await fetch('/api/admin/attendance');
@@ -20,8 +27,19 @@ function AdminDashboard() {
     };
   };
 
+  const fetchSummary = async () => {
+    try {
+      const res = await fetch('/api/admin/summary');
+      const data = await res.json();
+      setSummary(data);
+    } catch(err) {
+      toast.error("Error Fetching Summary");
+    };
+  };
+
   useEffect(() => {
     fetchAttendanceLogs();
+    fetchSummary();
   }, []);
 
   return (
@@ -41,15 +59,15 @@ function AdminDashboard() {
         <div className="stats">
           <div className="stat-item">
             <h3>Total Employees</h3>
-            <p>25</p>
+            <p>{summary.totalEmployees}</p>
           </div>
           <div className="stat-item">
             <h3>Today's Attendance</h3>
-            <p>80%</p>
+            <p>{summary.attendanceRate}%</p>
           </div>
           <div className="stat-item">
             <h3>Absentees</h3>
-            <p>5</p>
+            <p>{summary.absentees}</p>
           </div>
         </div>
       </section>

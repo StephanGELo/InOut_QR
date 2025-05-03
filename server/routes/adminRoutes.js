@@ -3,6 +3,12 @@ import express from 'express';
 import bcrypt from 'bcrypt';
 import pool from '../config/db.js';
 
+import {
+  getEmployees,
+  getAttendanceLogs,
+  getSummary
+} from '../controllers/adminController.js';
+
 const router = express.Router();
 const saltRounds = 15;
 
@@ -12,44 +18,10 @@ router.get('/test', (req, res) =>{
 });
 
 /////***GET REQUESTS***//////
-// Get all admins
-router.get('/employees', async(req, res) => {
-  try {
-    const query = "SELECT id, name, email FROM users WHERE role ='employee' ORDER BY id ASC";
-    const result = await pool.query(query);
-    res.status(200).json(result.rows);
-  } catch(err) {
-    res.status(500).json({error: 'Failed to fetch employees'});
-  };
-});
 
-// Get all attendance logs with employee details
-router.get('/attendance', async(req, res) => {
-  try {
-    const query = `
-      SELECT
-      a.id,
-      u.name,
-      u.email,
-      a.date,
-      a.check_in,
-      a.check_out,
-      CASE
-        WHEN a.check_in IS NOT NULL AND a.check_out IS NOT NULL THEN 'Present'
-        WHEN a.check_in IS NOT NULL AND a.check_out IS NULL THEN 'Checked-in only'
-        ELSE 'Absent'
-      END AS status
-      FROM attendance a
-      JOIN users u ON a.user_id = u.id
-      ORDER BY a.date DESC, u.name ASC
-    `;
-
-    const result = await pool.query(query);
-    res.status(200).json(result.rows);
-  } catch(err) {
-    res.status(500).json({ error: "Failed to fetch attendance logs"});
-  };
-});
+router.get('/employees', getEmployees);
+router.get('/attendance', getAttendanceLogs);
+router.get('/summary', getSummary);
 
 //////***POST REQUESTS***//////
 // Admin login route
