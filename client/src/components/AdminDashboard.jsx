@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import EmployeeList from './EmployeeList';
 import '/public/styles/AdminDashboard.css';
+import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 function AdminDashboard() {
   const [attendanceLogs, setAttendanceLogs] = useState([]); // Sample state for logs
@@ -14,6 +15,13 @@ function AdminDashboard() {
     absentees: 0,
     attendanceRate: 0
   });
+
+  const attendanceData = [
+    { name: 'Present', value: summary.present },
+    {name: 'Absent', value: summary.absentees }
+  ];
+
+  const COLORS = ['#28a745', '#dc3545'];
   
   const navigate = useNavigate();
   
@@ -70,6 +78,30 @@ function AdminDashboard() {
             <p>{summary.absentees}</p>
           </div>
         </div>
+      </section>
+
+      {/* Attendance Pie Chart */}
+      <section className="overview-chart-section">
+        <h2>Attendance Breakdown</h2>
+        <ResponsiveContainer width="100%" height={250}>
+          <PieChart>
+            <Pie
+              data={attendanceData}
+              dataKey="value"
+              nameKey="name"
+              cx="50%"
+              cy="50%"
+              outerRadius={70}
+              label
+              >
+                {attendanceData.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill ={COLORS[index % COLORS.length]} />
+                ))}
+              </Pie>
+            <Tooltip />
+            <Legend verticalAlign='bottom' height={36} />
+          </PieChart>
+        </ResponsiveContainer>
       </section>
 
       {/* Attendance Logs Section */}
