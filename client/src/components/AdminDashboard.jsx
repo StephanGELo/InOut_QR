@@ -16,6 +16,9 @@ function AdminDashboard() {
     attendanceRate: 0
   });
 
+  const storedAdmin = JSON.parse(localStorage.getItem('admin'));
+  const adminName = storedAdmin?.name || 'Admin';
+
   const attendanceData = [
     { name: 'Present', value: summary.present },
     {name: 'Absent', value: summary.absentees }
@@ -57,7 +60,7 @@ function AdminDashboard() {
         <Link to="/">
             <img src="/assets/logo.png" alt="InOut QR logo" className="logo"/>
         </Link>
-        <h1>Welcome, Admin</h1>
+        <h1>Welcome {adminName}</h1>
         <button className="logout-btn" onClick={() => navigate("/")}>Logout</button>
       </header>
 

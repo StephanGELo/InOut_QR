@@ -24,7 +24,8 @@ function AdminLogin() {
             const data = await result.json();
             if (result.status === 200) {
                 setMessage("Login Successful");
-                // Optionallu, redirect to admin dashboard or save user info in local storage
+                // Optionally, redirect to admin dashboard or save user info in local storage
+                localStorage.setItem('admin', JSON.stringify(data.admin));
                 navigate("/admin-dashboard");
             } else {
                 setMessage(`❌ ${data.error} - Please try again`);
