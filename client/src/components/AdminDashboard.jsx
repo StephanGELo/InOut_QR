@@ -1,12 +1,28 @@
 // AdminDashboard.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import EmployeeList from './EmployeeList'; // ✅ 1. Import the new component
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import EmployeeList from './EmployeeList';
 import '/public/styles/AdminDashboard.css';
 
 function AdminDashboard() {
   const [attendanceLogs, setAttendanceLogs] = useState([]); // Sample state for logs
   const navigate = useNavigate();
+
+  const fetchAttendanceLogs = async () => {
+    try {
+      const res = await fetch('/api/admin/attendance');
+      const data = await res.json();
+      setAttendanceLogs(data);
+    } catch(err) {
+      toast.error("Error Fetching attendance logs");
+    };
+  };
+
+  useEffect(() => {
+    fetchAttendanceLogs();
+  }, []);
 
   return (
     <div className="admin-dashboard">
@@ -40,11 +56,17 @@ function AdminDashboard() {
 
       {/* Attendance Logs Section */}
       <section className="attendance-logs-section">
-        <h2>Attendance Logs</h2>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <h2>Attendance Logs</h2>
+          <button onClick={fetchAttendanceLogs} className="refresh-btn">Refresh</button>
+        </div>
         <table className="attendance-table">
           <thead>
             <tr>
+              <th>Emp Id</th>
               <th>Employee Name</th>
+              <th>Employee Email</th>
+              <th>Date</th>
               <th>Check-in Time</th>
               <th>Check-out Time</th>
               <th>Status</th>
@@ -54,15 +76,18 @@ function AdminDashboard() {
             {attendanceLogs.length ? (
               attendanceLogs.map((log, index) => (
                 <tr key={index}>
+                  <td>{log.id}</td>
                   <td>{log.name}</td>
-                  <td>{log.checkIn}</td>
-                  <td>{log.checkOut}</td>
+                  <td>{log.email}</td>
+                  <td>{new Date(log.date).toLocaleDateString()}</td>
+                  <td>{log.check_in}</td>
+                  <td>{log.check_out}</td>
                   <td>{log.status}</td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="4">No logs available</td>
+                <td colSpan="7">No logs available</td>
               </tr>
             )}
           </tbody>

@@ -31,6 +31,7 @@ router.get('/attendance', async(req, res) => {
       a.id,
       u.name,
       u.email,
+      a.date,
       a.check_in,
       a.check_out,
       CASE

@@ -108,3 +108,17 @@ h2 {
     margin-top: 10px;
   }
 }
+
+.refresh-btn {
+  padding: 6px 12px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.refresh-btn:hover {
+  background-color: #218838;
+}
