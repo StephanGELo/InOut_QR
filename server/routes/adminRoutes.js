@@ -89,4 +89,61 @@ router.delete('/employees/:id', async( req, res) => {
   };
 });
 
+//////***PUT***//////
+// Update employee
+router.put('/employees/:id', async (req, res) => {
+  const { id } = req.params;
+  const { name, email, phone, address, role, password } = req.body;
+
+  try {
+    const updates = [];
+    const values = [];
+    let index = 1;
+
+    if (name) {
+      updates.push(`name = $${index++}`);
+      values.push(name);
+    }
+    if (email) {
+      updates.push(`email = $${index++}`);
+      values.push(email);
+    }
+    if (phone) {
+      updates.push(`phone = $${index++}`);
+      values.push(phone);
+    }
+    if (address) {
+      updates.push(`address = $${index++}`);
+      values.push(address);
+    }
+    if (role) {
+      updates.push(`role = $${index++}`);
+      values.push(role);
+    }
+    if (password) {
+      const bcrypt = await import('bcrypt');
+      const hashed = await bcrypt.hash(password, 10);
+      updates.push(`password = $${index++}`);
+      values.push(hashed);
+    }
+
+    if (updates.length === 0) {
+      return res.status(400).json({ error: 'No fields to update' });
+    }
+
+    const query = `UPDATE users SET ${updates.join(', ')} WHERE id = $${index} RETURNING id, name, email`;
+    values.push(id);
+
+    const result = await pool.query(query, values);
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Employee not found' });
+    }
+
+    res.status(200).json({ message: 'Employee updated', employee: result.rows[0] });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to update employee' });
+  }
+});
+
 export default router;

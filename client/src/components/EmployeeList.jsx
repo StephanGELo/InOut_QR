@@ -161,7 +161,7 @@ function EmployeeList() {
           employees.map(emp => (
             <li key={emp.id}>
               {editingId === emp.id ? (
-                <form className="edit-form" onSubmit={(e) => { e.preventDefault(); handleEditSave(emp.id); }}>
+                <form className="employee-form full-width" onSubmit={(e) => { e.preventDefault(); handleEditSave(emp.id); }}>
                   <input name="name" value={editForm.name} onChange={handleEditChange} placeholder="Name" required />
                   <input name="email" value={editForm.email} onChange={handleEditChange} placeholder="Email" required />
                   <input name="phone" value={editForm.phone || ''} onChange={handleEditChange} placeholder="Phone" />
@@ -178,10 +178,10 @@ function EmployeeList() {
                 <>
                   <span>{emp.name} ({emp.email})</span>
                   <div>
-                    <button onClick={() => handleEditClick(emp)} className="edit-icon-btn">
+                    <button onClick={() => handleEditClick(emp)} className="icon-btn">
                       <EditOutlinedIcon fontSize="small" />
                     </button>
-                    <button onClick={() => handleDelete(emp.id, emp.name)} className="delete-icon-btn">
+                    <button onClick={() => handleDelete(emp.id, emp.name)} className="icon-btn">
                       <DeleteForeverOutlinedIcon fontSize="small" />
                     </button>
                   </div>

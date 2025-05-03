@@ -2,8 +2,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import EmployeeList from './EmployeeList'; // ✅ 1. Import the new component
-
-
 import '/public/styles/AdminDashboard.css';
 
 function AdminDashboard() {

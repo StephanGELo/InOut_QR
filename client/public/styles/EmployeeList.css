@@ -1,47 +1,62 @@
-.delete-icon-btn {
+/* Shared icon button style */
+.icon-btn {
   background: none;
   border: none;
   cursor: pointer;
-  padding: 0;
-  margin-left: 12px;
-  color: #888;
+  padding: 0 6px;
+  color: #555;
   display: inline-flex;
   align-items: center;
   vertical-align: middle;
 }
 
-.delete-icon-btn:hover {
+.icon-btn:hover {
   color: #d32f2f;
 }
 
+/* Employee list layout */
 .employee-list li {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
   padding: 6px 0;
   border-bottom: 1px solid #eee;
   font-size: 1rem;
 }
 
 .employee-list-container {
-  max-width: 500px;
+  max-width: 800px;
   margin: 0 auto;
   padding: 1rem;
 }
 
-.employee-form {
+/* Responsive form layout */
+.employee-form .form-group {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   gap: 12px;
-  margin-bottom: 1rem;
 }
 
-.form-group input {
+.employee-form input,
+.employee-form select {
   width: 100%;
   padding: 0.6rem;
   border: 1px solid #ccc;
   border-radius: 6px;
   font-size: 1rem;
+}
+
+@media (min-width: 768px) {
+
+  .employee-form .form-group input,
+  .employee-form .form-group select {
+    flex: 1 1 calc(33.333% - 12px);
+  }
+}
+
+.employee-form button {
+  margin-right: 10px;
 }
 
 .form-submit-btn {
@@ -70,20 +85,17 @@
   padding: 0;
 }
 
-.employee-list li {
-  padding: 0.4rem 0;
-  border-bottom: 1px solid #eee;
+.full-width {
+  width: 100%;
 }
 
-/* Mobile responsiveness */
 @media (max-width: 600px) {
   .employee-list-container {
     padding: 1rem 0.5rem;
   }
 
-  .form-group input,
+  .employee-form .form-group input,
   .form-submit-btn {
     font-size: 0.95rem;
   }
 }
-
