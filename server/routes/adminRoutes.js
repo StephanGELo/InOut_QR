@@ -40,7 +40,21 @@ router.post('/login', async (req, res) => {
       return res.status(401).json({ error: 'Invalid credentials' });
     };
 
-    res.status(200).json({ message: 'Login Succesful', admin: { id: admin.id, name: admin.name, email: admin.email }});
+    const token =JsonWebTokenError.sign(
+      {
+        id: admin.id,
+        role: 'admin',
+        name: admin.name
+      }, 
+      process.env.JWT_SECRET,
+      { expiresIn: process.env.JWT_EXPIRES_IN }
+    );
+   
+    res.status(200).json({ 
+      message: 'Login Succesful', 
+      token,
+      admin: { id: admin.id, name: admin.name, email: admin.email }
+    });
 
   } catch (err) { 
     res.status(500).json({ error: ' Server error'});
