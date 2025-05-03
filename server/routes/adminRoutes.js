@@ -23,6 +23,32 @@ router.get('/employees', async(req, res) => {
   };
 });
 
+// Get all attendance logs with employee details
+router.get('/attendance', async(req, res) => {
+  try {
+    const query = `
+      SELECT
+      a.id,
+      u.name,
+      u.email,
+      a.check_in,
+      a.check_out,
+      CASE
+        WHEN a.check_in IS NOT NULL AND a.check_out IS NOT NULL THEN 'Present'
+        WHEN a.check_in IS NOT NULL AND a.check_out IS NULL THEN 'Checked-in only'
+        ELSE 'Absent'
+      END AS status
+      FROM attendance a
+      JOIN users u ON a.user_id = u.id
+      ORDER BY a.date DESC, u.name ASC
+    `;
+
+    const result = await pool.query(query);
+    res.status(200).json(result.rows);
+  } catch(err) {
+    res.status(500).json({ error: "Failed to fetch attendance logs"});
+  };
+});
 
 //////***POST REQUESTS***//////
 // Admin login route
