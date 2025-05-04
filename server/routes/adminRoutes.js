@@ -2,6 +2,7 @@
 import express from 'express';
 import bcrypt from 'bcrypt';
 import pool from '../config/db.js';
+import jwt from 'jsonwebtoken';
 
 import {
   getEmployees,
@@ -42,7 +43,7 @@ router.post('/login', async (req, res) => {
       return res.status(401).json({ error: 'Invalid credentials' });
     };
 
-    const token =JsonWebTokenError.sign(
+    const token = jwt.sign(
       {
         id: admin.id,
         role: 'admin',
@@ -57,9 +58,11 @@ router.post('/login', async (req, res) => {
       token,
       admin: { id: admin.id, name: admin.name, email: admin.email }
     });
+    
 
   } catch (err) { 
-    res.status(500).json({ error: ' Server error'});
+    console.error("Login error:", err);
+    res.status(500).json({ error: ' Server error during login'});
   };
 });
 
