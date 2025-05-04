@@ -9,6 +9,8 @@ import {
   getSummary
 } from '../controllers/adminController.js';
 
+import { verifyAdminToken } from '../middleware/auth.js';
+
 const router = express.Router();
 const saltRounds = 15;
 
@@ -20,8 +22,8 @@ router.get('/test', (req, res) =>{
 /////***GET REQUESTS***//////
 
 router.get('/employees', getEmployees);
-router.get('/attendance', getAttendanceLogs);
-router.get('/summary', getSummary);
+router.get('/attendance', verifyAdminToken, getAttendanceLogs);
+router.get('/summary', verifyAdminToken, getSummary);
 
 //////***POST REQUESTS***//////
 // Admin login route
