@@ -9,7 +9,7 @@ import {
   getSummary
 } from '../controllers/adminController.js';
 
-import { verifyAdminToken } from '../middleware/auth.js';
+import { verifyAdminToken } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 const saltRounds = 15;
