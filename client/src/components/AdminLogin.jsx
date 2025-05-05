@@ -26,6 +26,7 @@ function AdminLogin() {
                 setMessage("Login Successful");
                 // Optionally, redirect to admin dashboard or save user info in local storage
                 localStorage.setItem('admin', JSON.stringify(data.admin));
+                localStorage.setItem('adminToken', data.token);
                 navigate("/admin-dashboard");
             } else {
                 setMessage(`❌ ${data.error} - Please try again`);

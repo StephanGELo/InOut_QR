@@ -1,22 +1,41 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import '/public/styles/EmployeeLogin.css';
 
 
 function EmployeeLogin() {
-    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
 
-    function handleLogin(e) {
+    const handleLogin = async (e) => {
         e.preventDefault();
-        if (username === "employee" && password ==="123456") {
-            console.log("Login successful");
-            navigate('/employee-dashboard');
-        } else {
-            alert("Login Unsucessful. Invalid credentials");
-        }
+        try{
+            const result = await fetch("/api/employee/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type" : "application/json",
+
+                },
+                body: JSON.stringify({ email, password }),
+            });
+            const data = await result.json();
+
+            if (result.ok) {
+                //  login successful
+                localStorage.setItem('employeeToken', data.token);
+                localStorage.setItem('employee', JSON.stringify(data.employee));
+                navigate('/employee-dashboard');
+            } else {
+                toast.error(`❌ ${data.error}`);
+            }
+        } catch(err) {
+            console.error("Login error:" , err);
+            toast.error("❌ Login failed. Please try again.");
+        };
         
     }
 
@@ -30,12 +49,12 @@ function EmployeeLogin() {
                 <p>Please login to track your attendance</p> 
             </header>
             <form onSubmit={handleLogin} className='login-form'>
-                <label htmlFor='username'>Username or Email</label>
+                <label htmlFor='email'>Email</label>
                 <input 
                     type="text"
-                    value={username}
-                    id="username"
-                    onChange={(e)=> setUsername(e.target.value)}
+                    value={email}
+                    id="email"
+                    onChange={(e)=> setEmail(e.target.value)}
                     required
                 />
 

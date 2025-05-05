@@ -12,6 +12,10 @@ function EmployeeDashboard() {
     const [checkInMessage, setCheckInMessage] = useState('');
     const navigate = useNavigate();
   
+    // Store employee data in local storage
+    const storedEmployee = JSON.parse(localStorage.getItem('employee'));
+    const employeeName = storedEmployee?.name || 'Employee';
+
     const handleCheckInOut = () => {
       setShowScanner(true);  // Show the QR scanner on button click
     };
@@ -37,19 +41,21 @@ function EmployeeDashboard() {
   return (
     <div className="employee-dashboard">
       <header className="dashboard-header">
-        <Link to="/">
-            <img src="/assets/logo.png" alt="InOut QR Logo" className="logo" />
-        </Link>
-        <h1>Employee Dashboard</h1>
-        <div className="user-profile">
-          <span>Welcome, [Employee Name]</span>
-          <div className="profile-options">
-            {/* <button>Settings</button>
-            <button>Help</button> */}
-            <button onClick={() => navigate("/")}>Logout</button>
-          </div>
-        </div>
-      </header>
+  <Link to="/">
+    <img src="/assets/logo.png" alt="InOut QR logo" className="logo" />
+  </Link>
+  <h1>Welcome {employeeName}</h1>
+  <button
+    className="logout-btn"
+    onClick={() => {
+      localStorage.removeItem('employee');
+      localStorage.removeItem('employeeToken');
+      navigate('/');
+    }}
+  >
+    Logout
+  </button>
+</header>
 
       <section className="attendance-section">
         <h2>Attendance Tracking</h2>

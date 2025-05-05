@@ -18,6 +18,7 @@ function AdminDashboard() {
 
   const storedAdmin = JSON.parse(localStorage.getItem('admin'));
   const adminName = storedAdmin?.name || 'Admin';
+  const token = localStorage.getItem('adminToken');
 
   const attendanceData = [
     { name: 'Present', value: summary.present },
@@ -30,7 +31,11 @@ function AdminDashboard() {
   
   const fetchAttendanceLogs = async () => {
     try {
-      const res = await fetch('/api/admin/attendance');
+      const res = await fetch('/api/admin/attendance', {
+        headers: {
+          Authorization : `Bearer ${token}`
+        }
+      });
       const data = await res.json();
       setAttendanceLogs(data);
     } catch(err) {
@@ -40,7 +45,11 @@ function AdminDashboard() {
 
   const fetchSummary = async () => {
     try {
-      const res = await fetch('/api/admin/summary');
+      const res = await fetch('/api/admin/summary', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
       const data = await res.json();
       setSummary(data);
     } catch(err) {
@@ -56,12 +65,21 @@ function AdminDashboard() {
   return (
     <div className="admin-dashboard">
       {/* Header Section */}
-      <header className="admin-header">
+      <header className="dashboard-header">
         <Link to="/">
             <img src="/assets/logo.png" alt="InOut QR logo" className="logo"/>
         </Link>
         <h1>Welcome {adminName}</h1>
-        <button className="logout-btn" onClick={() => navigate("/")}>Logout</button>
+        <button
+          className="logout-btn"
+          onClick={() => {
+            localStorage.removeItem('adminToken');
+            localStorage.removeItem('admin');
+            navigate('/');
+          }}
+        >
+          Logout
+        </button>
       </header>
 
       {/* Overview Section */}

@@ -9,7 +9,7 @@
   padding: 1rem;
 }
 
-.admin-header {
+.dashboard-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
