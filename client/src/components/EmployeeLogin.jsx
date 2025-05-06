@@ -54,6 +54,8 @@ function EmployeeLogin() {
                     type="text"
                     value={email}
                     id="email"
+                    name="email"
+                    autoComplete="email"
                     onChange={(e)=> setEmail(e.target.value)}
                     required
                 />
@@ -63,13 +65,15 @@ function EmployeeLogin() {
                     type="password"
                     id="password"
                     value={password}
+                    name="password"
+                    autoComplete="current-password"
                     onChange={(e) => setPassword(e.target.value) }
                     required
                 />
 
                 <button type="submit" className="login-button">Login</button>
                 <div className="login-options">
-                    <input type="checkbox" id="remember" />
+                    <input type="checkbox" id="remember" name="remember"/>
                     <label htmlFor='remember'>Remember Me</label>
                     <Link to="/forgot-password" className="forgot-password">Forgot Password</Link>
                 </div>

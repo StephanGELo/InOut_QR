@@ -4,6 +4,11 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import pool from '../config/db.js';
 
+
+import {
+  checkIn
+} from '../controllers/employeeController.js';
+
 const router = express.Router();
 
 // Example protected employee route
@@ -56,6 +61,8 @@ router.post('/login', async (req, res) => {
     res.status(500).json({ error: 'Server error during login' });
   }
 });
+
+router.post('/checkin', verifyEmployeeToken, checkIn);
 
 
 export default router;

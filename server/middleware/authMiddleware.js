@@ -1,3 +1,4 @@
+// authMiddleware.js
 import jwt from 'jsonwebtoken';
 
 export const verifyAdminToken = (req, res, next) => {

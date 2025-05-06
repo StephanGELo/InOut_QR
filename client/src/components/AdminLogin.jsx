@@ -1,3 +1,4 @@
+// AdminLogin.jsx
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -53,6 +54,8 @@ function AdminLogin() {
                 <input 
                     type="text"
                     id="email"
+                    name="email"
+                    autoComplete="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
@@ -61,6 +64,8 @@ function AdminLogin() {
                 <input 
                     type="password"
                     id="password"
+                    name="password"
+                    autoComplete="current-password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
@@ -69,7 +74,7 @@ function AdminLogin() {
                 <div className="login-options">
                     <div>
                         <input type="checkbox" id="remember"/>
-                        <label htmlFor="Remember">Remember Me</label>
+                        <label htmlFor="remember">Remember Me</label>
                     </div>
                     <Link to="/forgot-password">Forgot Password</Link>
                 </div>

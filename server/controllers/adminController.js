@@ -73,13 +73,3 @@ try {
 };
 };
 
-export const checkInEmployee = async (req, res) => {
-  const { userId } = req.body;
-  const checkInTime = req.body.checkInTime;
-  try {
-    // Check if the employee is already checked in
-    const checkInQuery = `
-      SELECT `
-    const query = ``;
-  } catch (err) {};
-}

@@ -20,24 +20,42 @@ function EmployeeDashboard() {
       setShowScanner(true);  // Show the QR scanner on button click
     };
   
-    const handleScan = (data) => {
-      const expectedQRData = 'INOUTQR_CHECKIN_CODE_2024Q4'; // Static QR data
-  
+    const handleScan = async (data) => {
+      const expectedQRData = 'INOUTQR_CHECKIN_CODE_2024Q4';
+      const token = localStorage.getItem('employeeToken');
+    
       if (data === expectedQRData) {
-        const currentTime = new Date();
-        const formattedTime = currentTime.toLocaleString();
-
-        setScanTime(currentTime.toLocaleString());  // Set current time as scan time
-        setIsCheckedIn(!isCheckedIn);
-        setCheckInMessage(isCheckedIn ? `You checked out at ${formattedTime}` : `You checked in at ${formattedTime}`);
-        setShowScanner(false);  // Hide scanner after scanning
+        try {
+          const res = await fetch('/api/employee/checkin', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${token}`,
+            },
+          });
+    
+          const result = await res.json();
+    
+          if (res.ok) {
+            const now = new Date().toLocaleString();
+            setIsCheckedIn(true);
+            setScanTime(now);
+            setCheckInMessage(`You checked in at ${now}`);
+            setShowScanner(false);
+          } else {
+            alert(result.error || 'Check-in failed');
+            setShowScanner(false);
+          }
+        } catch (err) {
+          alert('Server error during check-in');
+          setShowScanner(false);
+        }
       } else {
         alert('Invalid QR Code');
         setShowScanner(false);
       }
     };
-
-
+    
   return (
     <div className="employee-dashboard">
       <header className="dashboard-header">
