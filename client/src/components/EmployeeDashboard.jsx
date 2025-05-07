@@ -4,6 +4,8 @@ import QRScanner from './QRScanner';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import '/public/styles/EmployeeDashboard.css';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function EmployeeDashboard() {
     const [isCheckedIn, setIsCheckedIn] = useState(false);
@@ -24,9 +26,16 @@ function EmployeeDashboard() {
       const expectedQRData = 'INOUTQR_CHECKIN_CODE_2024Q4';
       const token = localStorage.getItem('employeeToken');
     
-      if (data === expectedQRData) {
+      if (data !== expectedQRData) {
+        toast.error('Invalid QR Code');
+        setShowScanner(false);
+        return;
+      }
+
+      const endpoint = isCheckedIn ? '/api/employee/checkout' : '/api/employee/checkin';
+
         try {
-          const res = await fetch('/api/employee/checkin', {
+          const res = await fetch(endpoint, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -40,20 +49,20 @@ function EmployeeDashboard() {
             const now = new Date().toLocaleString();
             setIsCheckedIn(true);
             setScanTime(now);
-            setCheckInMessage(`You checked in at ${now}`);
-            setShowScanner(false);
+            setCheckInMessage(
+              isCheckedIn 
+              ? `You checked out at ${now}`
+              : `You checked in at ${now}`
+            );
           } else {
-            alert(result.error || 'Check-in failed');
-            setShowScanner(false);
+           toast.error(result.error || 'Action failed');
           }
         } catch (err) {
-          alert('Server error during check-in');
+          toast.error('Server error');
+        
+        } finally {
           setShowScanner(false);
         }
-      } else {
-        alert('Invalid QR Code');
-        setShowScanner(false);
-      }
     };
     
   return (
