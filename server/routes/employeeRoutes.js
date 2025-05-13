@@ -1,3 +1,4 @@
+//employeeRoutes.js
 import express from 'express';
 import { verifyEmployeeToken } from '../middleware/authMiddleware.js';
 import jwt from 'jsonwebtoken';
@@ -66,7 +67,7 @@ router.post('/login', async (req, res) => {
 
 router.post('/checkin', verifyEmployeeToken, checkIn);
 router.post('/checkout', verifyEmployeeToken, checkOut);
-router.get('.status', verifyEmployeeToken, getTodayStatus);
+router.get('/status', verifyEmployeeToken, getTodayStatus);
 
 
 export default router;

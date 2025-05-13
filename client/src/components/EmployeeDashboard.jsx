@@ -1,5 +1,5 @@
 // EmployeeDashboard.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import QRScanner from './QRScanner';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
@@ -64,6 +64,29 @@ function EmployeeDashboard() {
           setShowScanner(false);
         }
     };
+  
+    useEffect(() => {
+      const token = localStorage.getItem('employeeToken');
+
+      const fetchStatus = async () => {
+        try {
+          const res = await fetch('/api/employee/status', {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          });
+          const data = await res.json();
+          if (res.ok) {
+            setIsCheckedIn(data.checkedIn);
+            setCheckInMessage(data.message || '');
+          }
+        }  catch(err) {
+          console.error('Failed to load status', err);
+        };
+      };
+
+      fetchStatus();
+    }, []);
     
   return (
     <div className="employee-dashboard">
@@ -111,7 +134,7 @@ function EmployeeDashboard() {
         </ul>
       </section>
 
-      <footer className="dashboard-footer">
+      <footer className="dashboard-footer"> 
         <a href="/support">Help</a> | 
         <a href="/terms">Terms of Service</a> | 
         <a href="/privacy">Privacy Policy</a>

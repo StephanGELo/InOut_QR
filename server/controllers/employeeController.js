@@ -2,7 +2,7 @@
 import pool from '../config/db.js';
 
 export const checkIn = async (req, res) => {
-    console.log('Decoded user from token:', req.user);
+    // console.log('Decoded user from token:', req.user);
   try {
     const userId = req.user.id; // assuming employeeToken has been decoded by middleware
     const today = new Date().toISOString().split('T')[0];

@@ -1,3 +1,4 @@
+// EmployeeLogin.jsx
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
@@ -26,6 +27,8 @@ function EmployeeLogin() {
 
             if (result.ok) {
                 //  login successful
+                // console.log("Login Success. Navigating...");
+                // console.log("Response body:", data);
                 localStorage.setItem('employeeToken', data.token);
                 localStorage.setItem('employee', JSON.stringify(data.employee));
                 navigate('/employee-dashboard');
