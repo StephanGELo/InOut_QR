@@ -7,7 +7,8 @@ import pool from '../config/db.js';
 
 import {
   checkIn,
-  checkOut
+  checkOut,
+  getTodayStatus
 } from '../controllers/employeeController.js';
 
 const router = express.Router();
@@ -65,6 +66,7 @@ router.post('/login', async (req, res) => {
 
 router.post('/checkin', verifyEmployeeToken, checkIn);
 router.post('/checkout', verifyEmployeeToken, checkOut);
+router.get('.status', verifyEmployeeToken, getTodayStatus);
 
 
 export default router;
