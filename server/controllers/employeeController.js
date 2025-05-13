@@ -114,7 +114,7 @@ export const getTimesheet = async (req, res) => {
       SELECT date, check_in, check_out,
         CASE
           WHEN check_in IS NOT NULL AND check_out IS NOT NULL THEN 'Present'
-          WHEN check_in IS NOT NULL AND check_out IS NOT NULL THEN 'Checked_in only'
+          WHEN check_in IS NOT NULL AND check_out IS NULL THEN 'Checked_in only'
           ELSE 'Absent'
         END AS status
         FROM attendance

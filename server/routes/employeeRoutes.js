@@ -9,6 +9,7 @@ import pool from '../config/db.js';
 import {
   checkIn,
   checkOut,
+  getTimesheet,
   getTodayStatus
 } from '../controllers/employeeController.js';
 
@@ -68,6 +69,7 @@ router.post('/login', async (req, res) => {
 router.post('/checkin', verifyEmployeeToken, checkIn);
 router.post('/checkout', verifyEmployeeToken, checkOut);
 router.get('/status', verifyEmployeeToken, getTodayStatus);
+router.get('/timesheet', verifyEmployeeToken, getTimesheet);
 
 
 export default router;
