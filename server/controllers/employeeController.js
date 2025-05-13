@@ -73,3 +73,29 @@ export const checkOut = async (req, res) => {
     res.status(500).json({ error: 'Failed to check out'});
   };
 };
+
+export const getTodayStatus = async (req, res) =>{
+  try {
+    const userId = req.user.id;
+    const today = new Date().toISOString().split('T')[0];
+
+    const query = `SELECT check_in, check_out FROM attendance WHERE user_id= $1 AND date = $2`;
+    const result = await pool.query(query, [userId, today]);
+
+    if (result.rows.length === 0 ) {
+      return res.status(200).json({checkedIn: false});
+    }
+    
+    const { check_in, check_out } = result.rows[0];
+
+    res.status(200).json({
+      checkedIn: !!check_in && !check_out,
+      message: check_out
+      ? 'Already checked out'
+      : 'Checked in but not yet checked out',
+    });
+  } catch (err) {
+    console.error('Status fetch error', err);
+    res.status(500).json({ error: 'Failed to fetch status'});
+  };
+};
