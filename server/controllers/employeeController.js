@@ -108,7 +108,7 @@ export const getTimesheet = async (req, res) => {
     const userId = req.user.id;
     const now = new Date();
     const firstDay = new Date(now.getFullYear(), now.getMonth(), 1).toISOString().split('T')[0];
-    const lastDay = new Date(now.getFullYear(), getMonth() + 1, 0).toISOString().split('T')[0];
+    const lastDay = new Date(now.getFullYear(), now.getMonth() + 1, 0).toISOString().split('T')[0];
 
     const query = `
       SELECT date, check_in, check_out,

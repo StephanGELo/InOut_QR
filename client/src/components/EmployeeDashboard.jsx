@@ -12,6 +12,7 @@ function EmployeeDashboard() {
     const [showScanner, setShowScanner] = useState(false);
     const [scanTime, setScanTime] = useState(null);
     const [checkInMessage, setCheckInMessage] = useState('');
+    const [timesheet, setTimesheet] = useState('');
     const navigate = useNavigate();
   
     // Store employee data in local storage
@@ -66,8 +67,10 @@ function EmployeeDashboard() {
     };
   
     useEffect(() => {
+      // GET employee details
       const token = localStorage.getItem('employeeToken');
 
+      // Fetch STATUS
       const fetchStatus = async () => {
         try {
           const res = await fetch('/api/employee/status', {
@@ -81,11 +84,29 @@ function EmployeeDashboard() {
             setCheckInMessage(data.message || '');
           }
         }  catch(err) {
-          console.error('Failed to load status', err);
+          toast.error('Failed to load status', err);
+        };
+      };
+
+      // GET Timesheet
+      const fetchTimesheet = async () => {
+        try {
+          const result = await fetch('/api/employee/timesheet', {
+            headers: {
+              Authorization : `Bearer ${token}`
+            }
+          });
+          const data = await result.json();
+          if(result.ok) {
+            setTimesheet(data);
+          }
+        } catch(err) {
+          toast.error('Error fetching the timesheet', err);
         };
       };
 
       fetchStatus();
+      fetchTimesheet();
     }, []);
     
   return (
