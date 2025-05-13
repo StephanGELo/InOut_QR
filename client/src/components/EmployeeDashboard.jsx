@@ -143,6 +143,32 @@ function EmployeeDashboard() {
       <section className="timesheet-section">
         <h2>Monthly Timesheet</h2>
         {/* Calendar grid or table would go here */}
+        <table className="attendance-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Check-in</th>
+              <th>Check-out</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {timesheet.length > 0 ? (
+              timesheet.map((entry, index) => (
+                <tr key={index}>
+                  <td>{new Date(entry.date).toLocaleDateString()}</td>
+                  <td>{entry.check_in || '_'}</td>
+                  <td>{entry.check_out || '_'}</td>
+                  <td>{entry.status}</td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="4">No records for this month.</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
         <p>Total Hours: [Calculated Total]</p>
         <button>Download Timesheet</button>
       </section>
