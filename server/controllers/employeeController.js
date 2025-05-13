@@ -1,6 +1,7 @@
 // employeeController.js
 import pool from '../config/db.js';
 
+// CHECKIN
 export const checkIn = async (req, res) => {
     // console.log('Decoded user from token:', req.user);
   try {
@@ -34,8 +35,8 @@ export const checkIn = async (req, res) => {
   }
 };
 
+//CHECKOUT
 export const checkOut = async (req, res) => {
-  
   try {
     const userId = req.user.id;
     const today = new Date().toISOString().split('T')[0];
@@ -74,6 +75,7 @@ export const checkOut = async (req, res) => {
   };
 };
 
+// GET TODAY STATUS
 export const getTodayStatus = async (req, res) =>{
   try {
     const userId = req.user.id;
@@ -97,5 +99,33 @@ export const getTodayStatus = async (req, res) =>{
   } catch (err) {
     console.error('Status fetch error', err);
     res.status(500).json({ error: 'Failed to fetch status'});
+  };
+};
+
+// GET EMPLOYEE's TIMESHEET
+export const getTimesheet = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const now = new Date();
+    const firstDay = new Date(now.getFullYear(), now.getMonth(), 1).toISOString().split('T')[0];
+    const lastDay = new Date(now.getFullYear(), getMonth() + 1, 0).toISOString().split('T')[0];
+
+    const query = `
+      SELECT date, check_in, check_out,
+        CASE
+          WHEN check_in IS NOT NULL AND check_out IS NOT NULL THEN 'Present'
+          WHEN check_in IS NOT NULL AND check_out IS NOT NULL THEN 'Checked_in only'
+          ELSE 'Absent'
+        END AS status
+        FROM attendance
+        WHERE user_id = $1 AND date BETWEEN $2 AND $3
+        ORDER BY date ASC
+    `;
+    const result = await pool.query(query, [userId, firstDay, lastDay]);
+
+    res.status(200).json(result.rows);
+  } catch(err) {
+    console.error("Failed to fetch Timesheet", err);
+    res.status(500).json({ error: 'Failed to load timesheet'});
   };
 };
