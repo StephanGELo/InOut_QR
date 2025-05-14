@@ -7,6 +7,49 @@ import '/public/styles/EmployeeDashboard.css';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+ // Helper to Calculate Hours of attendance
+    const calculateHours = (checkIn, checkOut) => {
+      if (!checkIn || !checkOut) return 0;
+
+      const [h1, m1] = checkIn.split(':').map(Number);
+      const [h2, m2] = checkOut.split(':').map(Number);
+      const start = h1 * 60 + m1;
+      const end = h2 * 60 + m2;
+      return ((end - start) / 60).toFixed(2);
+    
+    }
+// Helper to download timesheet csv
+const downloadCSV = (data, filename = 'timesheet.csv') => {
+  if (!data || ! data.length) return;
+
+  const headers = [ 'Date', 'Check-in', 'Check-out', 'Status', 'Hours Worked'];
+  const rows = data.map(entry => [
+    new Date(entry.date).toLocaleDateString(),
+    entry.check_in || '_',
+    entry.check_out || "_",
+    entry.status,
+    calculateHours(entry.check_in, entry.check_out)
+  ]);
+
+  const totalHours = rows.reduce((sum, row) => sum + parseFloat(row[4] || 0), 0).toFixed(2);
+  rows.push(['', '', '', 'Total Hours', totalHours]);
+
+  const csvContent = [ headers, ...rows]
+    .map(e => e.join(','))
+    .join('\n');
+
+  const blob = new Blob([csvContent], {type: 'text/csv;charset=utf-8;'});
+  const url = URL.createObjectURL(blob);
+
+  const link = document.createElement('a');
+  link.href = url;
+  link.setAttribute('download', filename);
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+
+};
+
 function EmployeeDashboard() {
     const [isCheckedIn, setIsCheckedIn] = useState(false);
     const [showScanner, setShowScanner] = useState(false);
@@ -108,18 +151,6 @@ function EmployeeDashboard() {
       fetchStatus();
       fetchTimesheet();
     }, []);
-
-    // Calculate Hours of attendance
-    const calculateHours = (checkIn, checkOut) => {
-      if (!checkIn || !checkOut) return 0;
-
-      const [h1, m1] = checkIn.split(':').map(Number);
-      const [h2, m2] = checkOut.split(':').map(Number);
-      const start = h1 * 60 + m1;
-      const end = h2 * 60 + m2;
-      return ((end - start) / 60).toFixed(2);
-    
-    }
     
   return (
     <div className="employee-dashboard">
@@ -199,7 +230,7 @@ function EmployeeDashboard() {
             )}
           </tbody>
         </table>
-        <button>Download Timesheet</button>
+        <button onClick={() => downloadCSV(timesheet)}>Download Timesheet</button>
       </section>
 
       <section className="notifications-section">
