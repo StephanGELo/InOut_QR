@@ -108,6 +108,18 @@ function EmployeeDashboard() {
       fetchStatus();
       fetchTimesheet();
     }, []);
+
+    // Calculate Hours of attendance
+    const calculateHours = (checkIn, checkOut) => {
+      if (!checkIn || !checkOut) return 0;
+
+      const [h1, m1] = checkIn.split(':').map(Number);
+      const [h2, m2] = checkOut.split(':').map(Number);
+      const start = h1 * 60 + m1;
+      const end = h2 * 60 + m2;
+      return ((end - start) / 60).toFixed(2);
+    
+    }
     
   return (
     <div className="employee-dashboard">
@@ -150,26 +162,43 @@ function EmployeeDashboard() {
               <th>Check-in</th>
               <th>Check-out</th>
               <th>Status</th>
+              <th>Hours Worked</th>
             </tr>
           </thead>
           <tbody>
             {timesheet.length > 0 ? (
-              timesheet.map((entry, index) => (
+              <>
+              {timesheet.map((entry, index) => {
+                const hours = calculateHours(entry.check_in, entry.check_out);
+                return (
                 <tr key={index}>
                   <td>{new Date(entry.date).toLocaleDateString()}</td>
                   <td>{entry.check_in || '_'}</td>
                   <td>{entry.check_out || '_'}</td>
                   <td>{entry.status}</td>
+                  <td>{hours}</td>
                 </tr>
-              ))
+              );
+            })}
+            <tr style={{fontWeight: 'bold'}}>
+                <td colSpan="4">Total Hours</td>
+                <td>
+                  {timesheet
+                    .reduce((sum, entry) => {
+                      return sum + parseFloat(calculateHours(entry.check_in, entry.check_out));
+                    }, 0)
+                    .toFixed(2)
+                  }
+                </td>
+              </tr>
+              </>
             ) : (
               <tr>
-                <td colSpan="4">No records for this month.</td>
+                <td colSpan="5">No Records for this month.</td>
               </tr>
             )}
           </tbody>
         </table>
-        <p>Total Hours: [Calculated Total]</p>
         <button>Download Timesheet</button>
       </section>
 
