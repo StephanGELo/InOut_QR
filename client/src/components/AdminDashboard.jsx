@@ -134,38 +134,41 @@ function AdminDashboard() {
           <h2>Attendance Logs</h2>
           <button onClick={fetchAttendanceLogs} className="refresh-btn">Refresh</button>
         </div>
-        <table className="attendance-table">
-          <thead>
-            <tr>
-              <th>Emp Id</th>
-              <th>Employee Name</th>
-              <th>Employee Email</th>
-              <th>Date</th>
-              <th>Check-in Time</th>
-              <th>Check-out Time</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {attendanceLogs.length ? (
-              attendanceLogs.map((log, index) => (
-                <tr key={index}>
-                  <td>{log.id}</td>
-                  <td>{log.name}</td>
-                  <td>{log.email}</td>
-                  <td>{new Date(log.date).toLocaleDateString()}</td>
-                  <td>{log.check_in}</td>
-                  <td>{log.check_out}</td>
-                  <td>{log.status}</td>
-                </tr>
-              ))
-            ) : (
+
+        <div className="table-wrapper">
+          <table className="attendance-table">
+            <thead>
               <tr>
-                <td colSpan="7">No logs available</td>
+                <th>Emp Id</th>
+                <th>Employee Name</th>
+                <th>Employee Email</th>
+                <th>Date</th>
+                <th>Check-in Time</th>
+                <th>Check-out Time</th>
+                <th>Status</th>
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {attendanceLogs.length ? (
+                attendanceLogs.map((log, index) => (
+                  <tr key={index}>
+                    <td>{log.id}</td>
+                    <td>{log.name}</td>
+                    <td>{log.email}</td>
+                    <td>{new Date(log.date).toLocaleDateString()}</td>
+                    <td>{log.check_in}</td>
+                    <td>{log.check_out}</td>
+                    <td>{log.status}</td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="7">No logs available</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </section>
 
       {/* Employee Management Section */}
