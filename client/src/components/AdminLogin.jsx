@@ -22,12 +22,16 @@ function AdminLogin() {
                 },
                 body: JSON.stringify({ email, password}),
             });
+            console.log("Result:", result);
             const data = await result.json();
             if (result.status === 200) {
                 setMessage("Login Successful");
                 // Optionally, redirect to admin dashboard or save user info in local storage
                 localStorage.setItem('admin', JSON.stringify(data.admin));
                 localStorage.setItem('adminToken', data.token);
+                console.log("Redirecting to admin dashboard ....");
+                
+                console.log("Data:", data);
                 navigate("/admin-dashboard");
             } else {
                 setMessage(`❌ ${data.error} - Please try again`);

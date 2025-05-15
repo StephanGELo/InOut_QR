@@ -58,6 +58,7 @@ function AdminDashboard() {
   };
 
   useEffect(() => {
+  //  console.log("AdminDashboard mounted");
     fetchAttendanceLogs();
     fetchSummary();
   }, []);
@@ -65,21 +66,23 @@ function AdminDashboard() {
   return (
     <div className="admin-dashboard">
       {/* Header Section */}
-      <header className="dashboard-header">
-        <Link to="/">
-            <img src="/assets/logo.png" alt="InOut QR logo" className="logo"/>
-        </Link>
-        <h1>Welcome {adminName}</h1>
-        <button
-          className="logout-btn"
-          onClick={() => {
-            localStorage.removeItem('adminToken');
-            localStorage.removeItem('admin');
-            navigate('/');
-          }}
-        >
-          Logout
-        </button>
+      <header className="admin-header">
+        <div className="header-inner">
+          <Link to="/">
+              <img src="/assets/logo.png" alt="InOut QR logo" className="logo"/>
+          </Link>
+          <h1 className="welcome-msg">Welcome {adminName}</h1>
+          <button
+            className="logout-btn"
+            onClick={() => {
+              localStorage.removeItem('admin');
+              localStorage.removeItem('adminToken');
+              navigate('/');
+            }}
+          >
+            Logout
+          </button>
+        </div>
       </header>
 
       {/* Overview Section */}
