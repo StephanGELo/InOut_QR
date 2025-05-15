@@ -155,21 +155,23 @@ function EmployeeDashboard() {
   return (
     <div className="employee-dashboard">
       <header className="dashboard-header">
-  <Link to="/">
-    <img src="/assets/logo.png" alt="InOut QR logo" className="logo" />
-  </Link>
-  <h1>Welcome {employeeName}</h1>
-  <button
-    className="logout-btn"
-    onClick={() => {
-      localStorage.removeItem('employee');
-      localStorage.removeItem('employeeToken');
-      navigate('/');
-    }}
-  >
-    Logout
-  </button>
-</header>
+         <div className="header-inner">
+          <Link to="/">
+            <img src="/assets/logo.png" alt="InOut QR logo" className="logo" />
+          </Link>
+          <h1 className="welcome-msg">Welcome {employeeName}</h1>
+          <button
+            className="logout-btn"
+            onClick={() => {
+              localStorage.removeItem('employee');
+              localStorage.removeItem('employeeToken');
+              navigate('/');
+            }}
+          >
+            Logout
+          </button>
+        </div>
+      </header>
 
       <section className="attendance-section">
         <h2>Attendance Tracking</h2>
@@ -186,50 +188,52 @@ function EmployeeDashboard() {
       <section className="timesheet-section">
         <h2>Monthly Timesheet</h2>
         {/* Calendar grid or table would go here */}
-        <table className="attendance-table">
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Check-in</th>
-              <th>Check-out</th>
-              <th>Status</th>
-              <th>Hours Worked</th>
-            </tr>
-          </thead>
-          <tbody>
-            {timesheet.length > 0 ? (
-              <>
-              {timesheet.map((entry, index) => {
-                const hours = calculateHours(entry.check_in, entry.check_out);
-                return (
-                <tr key={index}>
-                  <td>{new Date(entry.date).toLocaleDateString()}</td>
-                  <td>{entry.check_in || '_'}</td>
-                  <td>{entry.check_out || '_'}</td>
-                  <td>{entry.status}</td>
-                  <td>{hours}</td>
-                </tr>
-              );
-            })}
-            <tr style={{fontWeight: 'bold'}}>
-                <td colSpan="4">Total Hours</td>
-                <td>
-                  {timesheet
-                    .reduce((sum, entry) => {
-                      return sum + parseFloat(calculateHours(entry.check_in, entry.check_out));
-                    }, 0)
-                    .toFixed(2)
-                  }
-                </td>
-              </tr>
-              </>
-            ) : (
+        <div className="attendance-table-wrapper">
+          <table className="attendance-table">
+            <thead>
               <tr>
-                <td colSpan="5">No Records for this month.</td>
+                <th>Date</th>
+                <th>Check-in</th>
+                <th>Check-out</th>
+                <th>Status</th>
+                <th>Hours Worked</th>
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {timesheet.length > 0 ? (
+                <>
+                {timesheet.map((entry, index) => {
+                  const hours = calculateHours(entry.check_in, entry.check_out);
+                  return (
+                  <tr key={index}>
+                    <td>{new Date(entry.date).toLocaleDateString()}</td>
+                    <td>{entry.check_in || '_'}</td>
+                    <td>{entry.check_out || '_'}</td>
+                    <td>{entry.status}</td>
+                    <td>{hours}</td>
+                  </tr>
+                );
+              })}
+              <tr style={{fontWeight: 'bold'}}>
+                  <td colSpan="4">Total Hours</td>
+                  <td>
+                    {timesheet
+                      .reduce((sum, entry) => {
+                        return sum + parseFloat(calculateHours(entry.check_in, entry.check_out));
+                      }, 0)
+                      .toFixed(2)
+                    }
+                  </td>
+                </tr>
+                </>
+              ) : (
+                <tr>
+                  <td colSpan="5">No Records for this month.</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
         <button onClick={() => downloadCSV(timesheet)}>Download Timesheet</button>
       </section>
 

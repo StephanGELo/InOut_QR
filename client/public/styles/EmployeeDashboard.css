@@ -1,21 +1,64 @@
 /* EmployeeDashboard.css */
+.attendance-table-wrapper {
+  overflow-x: auto;
+  width: 100%;
+}
+
+.attendance-table {
+  min-width: 600px;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+
+.dashboard-header {
+  background-color: #fff;
+  border-bottom: 1px solid #eee;
+  padding: 1rem 0;
+}
+
+.welcome-msg {
+  font-size: 1.2rem;
+  flex-grow: 1;
+  /* text-align: center; */
+  margin: 0 1rem;
+}
+
 .employee-dashboard {
     max-width: 800px;
     margin: auto;
     padding: 20px;
     font-family: Arial, sans-serif;
   }
-  
-  .dashboard-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-bottom: 20px;
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.logo {
+    height: 40px;
+    width: auto;
   }
+
+.logout-btn {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
   
-  .logo {
-    max-width: 50px;
-  }
+.logout-btn:hover {
+  background-color: #c82333;
+}
   
   .user-profile {
     text-align: right;
@@ -59,4 +102,23 @@
     color: #007bff;
     text-decoration: none;
   }
+
+/* Responsive for phones */
+@media (max-width: 600px) {
+  .header-inner {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .welcome-msg {
+    text-align: center;
+    font-size: 1rem;
+    width: 100%;
+  }
+
+  .logout-btn {
+    width: 100%;
+    font-size: 0.95rem;
+  }
+}
   
