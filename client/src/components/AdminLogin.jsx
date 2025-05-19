@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import "/public/styles/login.css";
+import "../../public/styles/login.css";
 
 function AdminLogin() {
     const [ email, setEmail ] = useState("");
