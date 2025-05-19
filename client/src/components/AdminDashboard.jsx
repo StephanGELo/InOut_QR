@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import EmployeeList from './EmployeeList';
-import '../../public/styles/AdminDashboard.css';
+import '../styles/AdminDashboard.css';
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 function AdminDashboard() {

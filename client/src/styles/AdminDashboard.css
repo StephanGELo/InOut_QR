@@ -1,0 +1,181 @@
+/* AdminDashboard.css */
+
+.admin-dashboard,
+.admin-list-container {
+  font-family: Arial, sans-serif;
+  background-color: #f8f9fa;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.admin-header {
+  background-color: #fff;
+  border-bottom: 1px solid #eee;
+  padding: 1rem 0;
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.logo {
+  height: 40px;
+  width: auto;
+}
+
+.welcome-msg {
+  font-size: 1.2rem;
+  flex-grow: 1;
+  margin: 0 1rem;
+}
+
+.logout-btn {
+  background-color: #dc3545;
+  padding: 0.5rem 1rem;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.logout-btn:hover {
+  background-color: #c82333;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  width: 100%;
+}
+
+.attendance-table {
+  min-width: 700px;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.attendance-table th,
+.attendance-table td {
+  padding: 8px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.attendance-table th {
+  background-color: #f1f1f1;
+}
+
+.overview-section,
+.attendance-logs-section,
+.qr-management-section,
+.settings-section {
+  background-color: #fff;
+  padding: 15px;
+  margin: 15px 0;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  font-size: 1.2em;
+  margin-bottom: 10px;
+}
+
+.stats {
+  display: flex;
+  gap: 15px;
+}
+
+.stat-item {
+  flex: 1;
+  text-align: center;
+  padding: 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+}
+
+.stat-item h3 {
+  margin-bottom: 5px;
+  color: #6c757d;
+}
+
+.attendance-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.attendance-table th,
+.attendance-table td {
+  padding: 8px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.attendance-table th {
+  background-color: #f1f1f1;
+}
+
+.generate-qr-btn,
+.manage-employees-btn {
+  padding: 10px 20px;
+  background-color: #0275d8;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Media Queries for Mobile */
+@media (max-width: 600px) {
+  .stats {
+    flex-direction: column;
+  }
+
+  .header-inner {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .welcome-msg {
+    text-align: center;
+    font-size: 1rem;
+    width: 100%;
+  }
+
+  .logout-btn {
+    width: 100%;
+    font-size: 0.95rem;
+  }
+
+  .h1 {
+    font-size: 1.2em;
+  }
+
+  .generate-qr-btn,
+  .manage-employees-btn {
+    width: 100%;
+    margin-top: 10px;
+  }
+}
+
+.refresh-btn {
+  padding: 6px 12px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.refresh-btn:hover {
+  background-color: #218838;
+}

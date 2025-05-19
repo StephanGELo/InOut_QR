@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import 'react-toastify/dist/ReactToastify.css';
-import "../../public/styles/EmployeeList.css";
+import "../styles/EmployeeList.css";
 
 function EmployeeList() {
   const [employees, setEmployees] = useState([]);
