@@ -34,10 +34,15 @@ router.post('/login', async (req, res) => {
     const userQuery = 'SELECT * from users WHERE email = $1 AND role = $2';
     const userQueryResult = await pool.query(userQuery, [email, 'admin']);
     const admin = userQueryResult.rows[0];
+
     if (!admin) {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
+    console.log("EMAIL:", email);
+    console.log("PASSWORD (plain):", password);
+    console.log("HASHED PASSWORD FROM DB:", admin.password);  
     const isMatch = await bcrypt.compare(password, admin.password);
+    console.log("Password match:", isMatch);
 
     if (!isMatch) {
       return res.status(401).json({ error: 'Invalid credentials' });
