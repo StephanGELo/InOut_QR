@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Routes , Navigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -10,11 +10,17 @@ import EmployeeLogin from './EmployeeLogin';
 import AdminLogin from './AdminLogin';
 import EmployeeDashboard from './EmployeeDashboard';
 import AdminDashboard from './AdminDashboard';
-import { use } from 'react';
-
 
 
 function App() {
+  const [adminLoggedIn, setAdminLoggedIn] = useState(false);
+  const [employeeLoggedIn, setEmployeeLoggedIn] = useState(false);
+
+  useEffect(() => {
+    setAdminLoggedIn(!!localStorage.getItem('adminToken'));
+    setEmployeeLoggedIn(!!localStorage.getItem('employeeToken'));
+  }, []);
+
   return (
     <>
       <Routes>
@@ -24,7 +30,7 @@ function App() {
         <Route 
           path="/employee-dashboard" 
           element={
-            localStorage.getItem('employeeToken') ? (
+            employeeLoggedIn ? (
               <EmployeeDashboard />
             ) : (
               <Navigate to="/employee-login" replace />
@@ -34,7 +40,7 @@ function App() {
         <Route 
           path="/admin-dashboard" 
           element={
-            localStorage.getItem('adminToken') ? (
+            adminLoggedIn ? (
               <AdminDashboard />
             ) : (
               <Navigate to="/admin-login"  replace />
