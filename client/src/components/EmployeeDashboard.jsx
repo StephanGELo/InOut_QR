@@ -51,92 +51,94 @@ const downloadCSV = (data, filename = 'timesheet.csv') => {
 };
 
 function EmployeeDashboard() {
-    const [isCheckedIn, setIsCheckedIn] = useState(false);
-    const [showScanner, setShowScanner] = useState(false);
-    const [scanTime, setScanTime] = useState(null);
-    const [checkInMessage, setCheckInMessage] = useState('');
-    const [timesheet, setTimesheet] = useState('');
-    const navigate = useNavigate();
+  const [isCheckedIn, setIsCheckedIn] = useState(false);
+  const [showScanner, setShowScanner] = useState(false);
+  const [scanTime, setScanTime] = useState(null);
+  const [checkInMessage, setCheckInMessage] = useState('');
+  const [timesheet, setTimesheet] = useState('');
+  const navigate = useNavigate();
+
+  // Store employee data in local storage
+  const storedEmployee = JSON.parse(localStorage.getItem('employee'));
+  const employeeName = storedEmployee?.name || 'Employee';
+
+  const handleCheckInOut = () => {
+    setShowScanner(true);  // Show the QR scanner on button click
+  };
   
-    // Store employee data in local storage
-    const storedEmployee = JSON.parse(localStorage.getItem('employee'));
-    const employeeName = storedEmployee?.name || 'Employee';
+  const handleScan = async (data) => {
+    if (!data || (typeof data === 'object' && !data.text)) return; // 👈 skip empty scans
 
-    const handleCheckInOut = () => {
-      setShowScanner(true);  // Show the QR scanner on button click
-    };
-  
-    const handleScan = async (data) => {
-      const scannedText = typeof data === 'object' ? data.text : data;
-      const expectedQRData = 'INOUTQR_CHECKIN_CODE_2024Q4';
-      const token = localStorage.getItem('employeeToken');
-      console.log('Scanned QR Data:', data)
-    
-      if (scannedText !== expectedQRData) {
-        toast.error('Invalid QR Code');
-        setShowScanner(false);
-        return;
-      }
+    const scannedText = typeof data === 'object' ? data.text : data;
+    const expectedQRData = 'INOUTQR_CHECKIN_CODE_2024Q4';
+    const token = localStorage.getItem('employeeToken');
 
-      const endpoint = isCheckedIn ? '/api/employee/checkout' : '/api/employee/checkin';
+    console.log('Scanned QR Data:', scannedText);
 
-        try {
-          const res = await fetch(endpoint, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${token}`,
-            },
-          });
-    
-          const result = await res.json();
-    
-          if (res.ok) {
-            const now = new Date().toLocaleString();
-            setIsCheckedIn(true);
-            setScanTime(now);
-            setCheckInMessage(
-              isCheckedIn 
+    if (scannedText !== expectedQRData) {
+      toast.error('Invalid QR Code');
+      setShowScanner(false);
+      return;
+    }
+
+    const endpoint = isCheckedIn ? '/api/employee/checkout' : '/api/employee/checkin';
+
+    try {
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const result = await res.json();
+
+        if (res.ok) {
+          const now = new Date().toLocaleString();
+          setIsCheckedIn(!isCheckedIn);
+          setScanTime(now);
+          setCheckInMessage(
+            isCheckedIn
               ? `You checked out at ${now}`
               : `You checked in at ${now}`
-            );
-          } else {
-           toast.error(result.error || 'Action failed');
-          }
-        } catch (err) {
-          toast.error('Server error');
-        
-        } finally {
-          setShowScanner(false);
+          );
+        } else {
+          toast.error(result.error || 'Action failed');
         }
-    };
+      } catch (err) {
+        toast.error('Server error');
+      } finally {
+        setShowScanner(false);
+    }
+  };
   
-    useEffect(() => {
-      // GET employee details
-      const token = localStorage.getItem('employeeToken');
+  useEffect(() => {
+    // GET employee details
+    const token = localStorage.getItem('employeeToken');
 
-      // Fetch STATUS
-      const fetchStatus = async () => {
-        try {
-          const res = await fetch('/api/employee/status', {
-            headers: {
-              Authorization: `Bearer ${token}`
-            }
-          });
-          const data = await res.json();
-          if (res.ok) {
+    // Fetch STATUS
+    const fetchStatus = async () => {
+      try {
+        const res = await fetch('/api/employee/status', {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        const data = await res.json();
+        if (res.ok) {
             setIsCheckedIn(data.checkedIn);
             setCheckInMessage(data.message || '');
           }
-        }  catch(err) {
+      }  catch(err) {
           toast.error('Failed to load status', err);
         };
-      };
+    };
 
-      // GET Timesheet
-      const fetchTimesheet = async () => {
-        try {
-          const result = await fetch('/api/employee/timesheet', {
+    // GET Timesheet
+    const fetchTimesheet = async () => {
+      try {
+        const result = await fetch('/api/employee/timesheet', {
             headers: {
               Authorization : `Bearer ${token}`
             }
@@ -145,14 +147,14 @@ function EmployeeDashboard() {
           if(result.ok) {
             setTimesheet(data);
           }
-        } catch(err) {
+      } catch(err) {
           toast.error('Error fetching the timesheet', err);
         };
-      };
+    };
 
-      fetchStatus();
-      fetchTimesheet();
-    }, []);
+    fetchStatus();
+    fetchTimesheet();
+  }, []);
     
   return (
     <div className="employee-dashboard">
