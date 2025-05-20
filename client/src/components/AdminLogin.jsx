@@ -30,6 +30,7 @@ function AdminLogin() {
                 // Optionally, redirect to admin dashboard or save user info in local storage
                 localStorage.setItem('admin', JSON.stringify(data.admin));
                 localStorage.setItem('adminToken', data.token);
+                window.dispatchEvent(new Event('loginEvent'));
                 console.log("Redirecting to admin dashboard ....");
                 
                 console.log("Data:", data);

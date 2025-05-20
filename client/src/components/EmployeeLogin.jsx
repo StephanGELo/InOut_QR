@@ -31,6 +31,7 @@ function EmployeeLogin() {
                 // console.log("Response body:", data);
                 localStorage.setItem('employeeToken', data.token);
                 localStorage.setItem('employee', JSON.stringify(data.employee));
+                window.dispatchEvent(new Event('loginEvent'));
                 navigate('/employee-dashboard');
             } else {
                 toast.error(`❌ ${data.error}`);

@@ -17,8 +17,22 @@ function App() {
   const [employeeLoggedIn, setEmployeeLoggedIn] = useState(false);
 
   useEffect(() => {
-    setAdminLoggedIn(!!localStorage.getItem('adminToken'));
-    setEmployeeLoggedIn(!!localStorage.getItem('employeeToken'));
+
+    const checkLogin = () => {
+      setAdminLoggedIn(!!localStorage.getItem('adminToken'));
+      setEmployeeLoggedIn(!!localStorage.getItem('employeeToken'));
+    };
+
+    // Initial check
+    checkLogin();
+
+    // Listen for custom event
+    window.addEventListener('loginEvent', checkLogin);
+
+    // Cleanup
+    return () => {
+      window.removeEventListener('loginEvent', checkLogin);
+    };
   }, []);
 
   return (
