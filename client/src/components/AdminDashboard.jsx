@@ -28,10 +28,12 @@ function AdminDashboard() {
   const COLORS = ['#28a745', '#dc3545'];
   
   const navigate = useNavigate();
-  
+
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
+
   const fetchAttendanceLogs = async () => {
     try {
-      const res = await fetch('/api/admin/attendance', {
+      const res = await fetch(`${BASE_URL}/api/admin/attendance`, {
         headers: {
           Authorization : `Bearer ${token}`
         }
@@ -45,7 +47,7 @@ function AdminDashboard() {
 
   const fetchSummary = async () => {
     try {
-      const res = await fetch('/api/admin/summary', {
+      const res = await fetch(`${BASE_URL}/api/admin/summary`, {
         headers: {
           Authorization: `Bearer ${token}`
         }

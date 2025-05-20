@@ -12,10 +12,12 @@ function EmployeeLogin() {
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
 
+    const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
+
     const handleLogin = async (e) => {
         e.preventDefault();
         try{
-            const result = await fetch("/api/employee/login", {
+            const result = await fetch(`${BASE_URL}/api/employee/login`, {
                 method: "POST",
                 headers: {
                     "Content-Type" : "application/json",

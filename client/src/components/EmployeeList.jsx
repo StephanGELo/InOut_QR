@@ -17,9 +17,11 @@ function EmployeeList() {
   const [address, setAddress] = useState("");
   const [role, setRole] = useState("employee");
 
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
+
   const fetchEmployees = async () => {
     try {
-      const res = await fetch('/api/admin/employees');
+      const res = await fetch(`${BASE_URL}/api/admin/employees`);
       const data = await res.json();
       setEmployees(data);
     } catch(err) {
@@ -39,7 +41,7 @@ function EmployeeList() {
       return;
     }
     try {
-      const res = await fetch('/api/admin/employees',{
+      const res = await fetch(`${BASE_URL}/api/admin/employees`,{
         method: 'POST',
         headers: { 'Content-Type': 'application/json'},
         body: JSON.stringify({ name, email, password, phone, address, role }),
@@ -68,7 +70,7 @@ function EmployeeList() {
     if (!window.confirm("Are you sure you want to delete this employee?")) return;
 
     try {
-      const res = await fetch(`/api/admin/employees/${id}`, { method: 'DELETE' });
+      const res = await fetch(`${BASE_URL}/api/admin/employees/${id}`, { method: 'DELETE' });
       const data = await res.json();
       console.log("data is: ",data);
 
@@ -95,7 +97,7 @@ function EmployeeList() {
 
   const handleEditSave = async (id) => {
     try {
-      const res = await fetch(`/api/admin/employees/${id}`, {
+      const res = await fetch(`${BASE_URL}/api/admin/employees/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(editForm),
