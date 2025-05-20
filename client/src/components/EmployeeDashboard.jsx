@@ -69,6 +69,7 @@ function EmployeeDashboard() {
     const handleScan = async (data) => {
       const expectedQRData = 'INOUTQR_CHECKIN_CODE_2024Q4';
       const token = localStorage.getItem('employeeToken');
+      console.log('Scanned QR Data:', data)
     
       if (data !== expectedQRData) {
         toast.error('Invalid QR Code');
