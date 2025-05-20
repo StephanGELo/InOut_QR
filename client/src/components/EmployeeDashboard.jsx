@@ -81,8 +81,12 @@ function EmployeeDashboard() {
       return;
     }
 
-    const endpoint = isCheckedIn ? '/api/employee/checkout' : '/api/employee/checkin';
-
+    
+    const endpoint = isCheckedIn ? 'https://inoutqr-backend.onrender.com/api/employee/checkout' : 'https://inoutqr-backend.onrender.com/api/employee/checkin';
+    
+    console.log("Sending check-in request to:", endpoint);
+    console.log("Authorization token:", token);
+    
     try {
       const res = await fetch(endpoint, {
         method: 'POST',
@@ -93,6 +97,7 @@ function EmployeeDashboard() {
       });
 
       const result = await res.json();
+      console.log("Server response:", result);
 
         if (res.ok) {
           const now = new Date().toLocaleString();
@@ -120,7 +125,7 @@ function EmployeeDashboard() {
     // Fetch STATUS
     const fetchStatus = async () => {
       try {
-        const res = await fetch('/api/employee/status', {
+        const res = await fetch('https://inoutqr-backend.onrender.com/api/employee/status', {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -138,7 +143,7 @@ function EmployeeDashboard() {
     // GET Timesheet
     const fetchTimesheet = async () => {
       try {
-        const result = await fetch('/api/employee/timesheet', {
+        const result = await fetch('https://inoutqr-backend.onrender.com/api/employee/timesheet', {
             headers: {
               Authorization : `Bearer ${token}`
             }
