@@ -14,11 +14,24 @@ import employeeRoutes from './routes/employeeRoutes.js';
 // Initialize express app
 const app = express();
 
+const allowedOrigins = [
+  'https://inoutqr-frontend.onrender.com', // live frontend domain
+  'http://localhost:5173' // Local dev
+];
+
+app.use(cors({
+  origin: allowedOrigins,
+  credentials: true, // Optional: only if using cookies or auth headers
+}));
+
 // Load environment variables
 env.config();
 
 // Middleware
-app.use(cors()); // <-- Allow frontend to connect to backend
+app.use(cors({
+  origin: allowedOrigins,
+  credentials: true, // Optional: only if using cookies or auth headers
+})); // <-- Allow frontend to connect to backend
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json()); //  for POST requests
 app.use(express.static('public'));
@@ -47,7 +60,7 @@ app.get('/test-db', async (req, res) => {
 // Use routes (to be added later)
 
 // Start server
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
