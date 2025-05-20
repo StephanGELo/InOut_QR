@@ -26,25 +26,31 @@ router.get('/employees', getEmployees);
 router.get('/attendance', verifyAdminToken, getAttendanceLogs);
 router.get('/summary', verifyAdminToken, getSummary);
 
+// Temporary setup route to create or update an admin user
 router.get('/setup-admin', async (req, res) => {
+  const name = 'Stephan Admin';
+  const email = 'stephanadmin@inoutqr.com';
+  const plainPassword = 'Sadmin123$';
+
   try {
-    const hashedPassword = await bcrypt.hash('Sadmin123$', 10);
-    const result = await pool.query(
-      `INSERT INTO users (name, email, password, role)
-       VALUES ($1, $2, $3, $4)
-       ON CONFLICT (email) DO NOTHING
-       RETURNING id, name, email`,
-      ['Stephan Admin', 'stephanadmin@inoutqr.com', hashedPassword, 'admin']
-    );
+    const hashedPassword = await bcrypt.hash(plainPassword, 10);
 
-    if (result.rows.length === 0) {
-      return res.status(200).json({ message: 'Admin already exists.' });
-    }
+    const query = `
+      INSERT INTO users (name, email, password, role)
+      VALUES ($1, $2, $3, 'admin')
+      ON CONFLICT (email)
+      DO UPDATE SET
+        name = EXCLUDED.name,
+        password = EXCLUDED.password,
+        role = 'admin';
+    `;
 
-    res.status(201).json({ message: 'Admin created', admin: result.rows[0] });
+    await pool.query(query, [name, email, hashedPassword]);
+    res.status(201).json({ message: 'Admin created or updated successfully.' });
+
   } catch (err) {
     console.error('Setup admin error:', err);
-    res.status(500).json({ error: 'Failed to set up admin' });
+    res.status(500).json({ error: 'Failed to set up admin.' });
   }
 });
 
