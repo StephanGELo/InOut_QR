@@ -1,4 +1,4 @@
-.login {
+/* .login {
     max-width: 400px;
     margin: auto;
     padding: 20px;
@@ -74,14 +74,14 @@ footer a {
     text-decoration: none;
 }
 /* General Media Query for Mobile Devices */
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
     .logo {
       max-width: 80px; /* Smaller logo for mobile */
-    }
+    /* }
   
     h1 {
       font-size: 1.5em; /* Slightly smaller header text */
-    }
+    /* }
   
     .login-form {
       padding: 10px;
@@ -91,7 +91,7 @@ footer a {
     input[type="password"] {
       padding: 8px;
       font-size: 0.9em; /* Smaller input font */
-    }
+    /* }
   
     .login-button {
       padding: 8px;
@@ -100,11 +100,11 @@ footer a {
   
     .login-options {
       flex-direction: column; /* Stack remember me and forgot password */
-      align-items: flex-start;
-    }
+      /* align-items: flex-start; */
+    /* }  */
   
-    footer {
-      font-size: 0.7em; /* Smaller footer text */
-    }
-  }
-  
+    /* footer {
+      font-size: 0.7em; Smaller footer text */
+    /* } */
+  /* } */ */ */
+   */
