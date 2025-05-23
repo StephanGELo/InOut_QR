@@ -9,7 +9,7 @@ function Homepage() {
       <header className="relative w-full max-w-7xl overflow-hidden bg-stone-800/80 backdrop-blur-sm border-b border-stone-700/50">
         <div className="absolute inset-0 bg-gradient-to-r from-amber-900/20 to-yellow-900/20"></div>
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 text-center">
-          <a href="/" className="inline-block mb-6 hover:scale-105 transition-transform duration-300">
+          <a to="/" className="inline-block mb-6 hover:scale-105 transition-transform duration-300">
             <img 
               src="/assets/inoutqr-logo.png" 
               alt="InOut QR Logo" 
@@ -35,8 +35,8 @@ function Homepage() {
           </div>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 max-w-md mx-auto">
-            <a 
-              href="/employee-login" 
+            <Link 
+              to="/employee-login" 
               className="group relative bg-stone-800/80 backdrop-blur-sm border border-stone-700/50 rounded-xl px-6 py-4 sm:py-6 text-center hover:bg-stone-700/80 hover:border-amber-500/50 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-amber-500/20"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-amber-800/10 to-yellow-800/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -48,10 +48,10 @@ function Homepage() {
                 </div>
                 <span className="text-white font-semibold text-lg">Employee Login</span>
               </div>
-            </a>
+            </Link>
             
-            <a 
-              href="/admin-login" 
+            <Link 
+              to="/admin-login" 
               className="group relative bg-stone-800/80 backdrop-blur-sm border border-stone-700/50 rounded-xl px-6 py-4 sm:py-6 text-center hover:bg-stone-700/80 hover:border-yellow-600/50 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-yellow-600/20"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-yellow-800/10 to-amber-800/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -63,7 +63,7 @@ function Homepage() {
                 </div>
                 <span className="text-white font-semibold text-lg">Admin Login</span>
               </div>
-            </a>
+            </Link>
           </div>
         </section>
 
@@ -138,26 +138,26 @@ function Homepage() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="text-center">
             <div className="flex flex-wrap justify-center items-center gap-4 sm:gap-8 text-stone-400">
-              <a 
-                href="/contact" 
+              <Link 
+                to="/contact" 
                 className="hover:text-amber-400 transition-colors duration-200 text-sm sm:text-base"
               >
                 Contact Support
-              </a>
+              </Link>
               <span className="text-stone-600">|</span>
-              <a 
-                href="/terms" 
+              <Link 
+                to="/terms" 
                 className="hover:text-amber-400 transition-colors duration-200 text-sm sm:text-base"
               >
                 Terms of Service
-              </a>
+              </Link>
               <span className="text-stone-600">|</span>
-              <a 
-                href="/privacy" 
+              <Link 
+                to="/privacy" 
                 className="hover:text-amber-400 transition-colors duration-200 text-sm sm:text-base"
               >
                 Privacy Policy
-              </a>
+              </Link>
             </div>
             <div className="mt-4 text-stone-500 text-sm">
               © 2024 InOut QR. All rights reserved.
