@@ -19,6 +19,7 @@ function EmployeeLogin() {
       e.preventDefault();
       setIsLoading(true);
       try{
+        console.log(API_BASE_URL);
           const result = await fetch(`${API_BASE_URL}/employee/login`, {
               method: "POST",
               headers: {
