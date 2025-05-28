@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import QRScanner from './QRScanner';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import '../../public/styles/EmployeeDashboard.css';
+// import '../../public/styles/EmployeeDashboard.css';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 

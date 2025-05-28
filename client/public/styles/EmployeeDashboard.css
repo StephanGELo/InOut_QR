@@ -1,5 +1,5 @@
 /* EmployeeDashboard.css */
-.attendance-table-wrapper {
+/* .attendance-table-wrapper {
   overflow-x: auto;
   width: 100%;
 }
@@ -20,7 +20,7 @@
 .welcome-msg {
   font-size: 1.2rem;
   flex-grow: 1;
-  /* text-align: center; */
+  
   margin: 0 1rem;
 }
 
@@ -29,9 +29,9 @@
     margin: auto;
     padding: 20px;
     font-family: Arial, sans-serif;
-  }
+  } */
 
-.header-inner {
+/* .header-inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -76,9 +76,9 @@
   h2 {
     font-size: 1.2em;
     color: #333;
-  }
+  } */
   
-  button {
+  /* button {
     padding: 10px;
     background-color: #007bff;
     color: #fff;
@@ -101,10 +101,10 @@
   .dashboard-footer a {
     color: #007bff;
     text-decoration: none;
-  }
+  } */
 
 /* Responsive for phones */
-@media (max-width: 600px) {
+/* @media (max-width: 600px) {
   .header-inner {
     flex-direction: column;
     align-items: center;
@@ -121,4 +121,4 @@
     font-size: 0.95rem;
   }
 }
-  
+   */

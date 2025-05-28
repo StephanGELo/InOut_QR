@@ -1,5 +1,5 @@
 /* Shared icon button style */
-.icon-btn {
+/* .icon-btn {
   background: none;
   border: none;
   cursor: pointer;
@@ -12,10 +12,10 @@
 
 .icon-btn:hover {
   color: #d32f2f;
-}
+} */
 
 /* Employee list layout */
-.employee-list li {
+/* .employee-list li {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -29,33 +29,33 @@
   max-width: 800px;
   margin: 0 auto;
   padding: 1rem;
-}
+} */
 
 /* Responsive form layout */
-.employee-form .form-group {
+/* .employee-form .form-group {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
-}
+} */
 
-.employee-form input,
+/* .employee-form input,
 .employee-form select {
   width: 100%;
   padding: 0.6rem;
   border: 1px solid #ccc;
   border-radius: 6px;
   font-size: 1rem;
-}
+} */
 
-@media (min-width: 768px) {
+/* @media (min-width: 768px) {
 
   .employee-form .form-group input,
   .employee-form .form-group select {
     flex: 1 1 calc(33.333% - 12px);
   }
-}
+} */
 
-.employee-form button {
+/* .employee-form button {
   margin-right: 10px;
 }
 
@@ -78,9 +78,9 @@
   font-size: 0.9rem;
   margin-top: 0.5rem;
   color: green;
-}
+} */
 
-.employee-list {
+/* .employee-list {
   list-style: none;
   padding: 0;
 }
@@ -98,4 +98,4 @@
   .form-submit-btn {
     font-size: 0.95rem;
   }
-}
+} */

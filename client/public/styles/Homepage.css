@@ -1,4 +1,4 @@
-.homepage {
+/* .homepage {
     text-align: center;
     padding: 20px;
     max-width: 500px;
@@ -34,21 +34,21 @@
   .footer p {
     font-size: 1em;
     color: #666;
-  }
+  } */
 
   /* General Media Query for Mobile Devices */
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
   .logo {
-    max-width: 80px; /* Smaller logo for mobile */
+    max-width: 80px; Smaller logo for mobile
   }
 
   h1 {
-    font-size: 1.5em; /* Slightly smaller header text */
+    font-size: 1.5em; Slightly smaller header text
   }
 
   footer {
-    font-size: 0.7em; /* Smaller footer text */
+    font-size: 0.7em; Smaller footer text
   }
-}
+} */
 
   

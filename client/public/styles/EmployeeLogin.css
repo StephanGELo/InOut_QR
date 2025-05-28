@@ -1,5 +1,5 @@
 /* EmployeeLogin.css */
-.employee-login {
+/* .employee-login {
     max-width: 400px;
     margin: auto;
     padding: 20px;
@@ -67,39 +67,39 @@
   footer a {
     color: #007bff;
     text-decoration: none;
-  }
+  } */
   
   /* General Media Query for Mobile Devices */
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
   .logo {
-    max-width: 80px; /* Smaller logo for mobile */
-  }
-
+    max-width: 80px; 
+  } */
+/* 
   h1 {
-    font-size: 1.5em; /* Slightly smaller header text */
-  }
+    font-size: 1.5em; Slightly smaller header text
+  } */
 
-  .login-form {
+  /* .login-form {
     padding: 10px;
-  }
-
+  } */
+/* 
   input[type="text"],
   input[type="password"] {
-    padding: 8px;
-    font-size: 0.9em; /* Smaller input font */
-  }
+    padding: 8px; */
+    /* font-size: 0.9em; Smaller input font */
+  /* } */
 
-  .login-button {
+  /* .login-button {
     padding: 8px;
     font-size: 0.9em;
-  }
+  } */
 
-  .login-options {
+  /* .login-options {
     flex-direction: column;
     align-items: flex-start;
   }
 
-  footer {
-    font-size: 0.7em; /* Smaller footer text */
-  }
-}
+  footer { */
+    /* font-size: 0.7em; Smaller footer text */
+  /* }
+} */
