@@ -21,7 +21,7 @@ function EmployeeList() {
 
   const fetchEmployees = async () => {
     try {
-      const res = await fetch(`${BASE_URL}/api/admin/employees`);
+      const res = await fetch(`${BASE_URL}/admin/employees`);
       const data = await res.json();
       setEmployees(data);
     } catch(err) {
@@ -41,7 +41,7 @@ function EmployeeList() {
       return;
     }
     try {
-      const res = await fetch(`${BASE_URL}/api/admin/employees`,{
+      const res = await fetch(`${BASE_URL}/admin/employees`,{
         method: 'POST',
         headers: { 'Content-Type': 'application/json'},
         body: JSON.stringify({ name, email, password, phone, address, role }),
@@ -70,7 +70,7 @@ function EmployeeList() {
     if (!window.confirm("Are you sure you want to delete this employee?")) return;
 
     try {
-      const res = await fetch(`${BASE_URL}/api/admin/employees/${id}`, { method: 'DELETE' });
+      const res = await fetch(`${BASE_URL}/admin/employees/${id}`, { method: 'DELETE' });
       const data = await res.json();
       console.log("data is: ",data);
 
@@ -97,7 +97,7 @@ function EmployeeList() {
 
   const handleEditSave = async (id) => {
     try {
-      const res = await fetch(`${BASE_URL}/api/admin/employees/${id}`, {
+      const res = await fetch(`${BASE_URL}/admin/employees/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(editForm),
@@ -361,82 +361,6 @@ function EmployeeList() {
       </div>
     </div>
   );
-  // return (
-  //   <div className="employee-list-container">
-  //     <h4>Add a New Employee</h4>
-  //     <form onSubmit={handleAddEmployee} className="employee-form">
-  //       <div className="form-group">
-  //         <input 
-  //           type="text"
-  //           placeholder="name"
-  //           value={name}
-  //           onChange={(e) => setName(e.target.value)}
-  //           required
-  //         />
-  //       </div>
-  //       <div className="form-group">
-  //         <input 
-  //             type="email"
-  //             placeholder="email"
-  //             value={email}
-  //             onChange={(e) => setEmail(e.target.value)}
-  //             required
-  //           />
-  //       </div>
-      
-  //       <div className="form-group">
-  //         <input 
-  //           type="password"
-  //           placeholder="password"
-  //           value={password}
-  //           onChange={(e) => setPassword(e.target.value)}
-  //           required
-  //         />
-  //       </div>
-        
-  //       <button type="submit">Add Employee</button>
-  //     </form>
-
-  //     <h4>List of employees</h4>
-  //     <ul>
-  //       {employees.length > 0 ? (
-  //         employees.map(emp => (
-  //           <li key={emp.id}>
-  //             {editingId === emp.id ? (
-  //               <form className="employee-form full-width" onSubmit={(e) => { e.preventDefault(); handleEditSave(emp.id); }}>
-  //                 <input name="name" value={editForm.name} onChange={handleEditChange} placeholder="Name" required />
-  //                 <input name="email" value={editForm.email} onChange={handleEditChange} placeholder="Email" required />
-  //                 <input name="phone" value={editForm.phone || ''} onChange={handleEditChange} placeholder="Phone" />
-  //                 <input name="address" value={editForm.address || ''} onChange={handleEditChange} placeholder="Address" />
-  //                 <select name="role" value={editForm.role} onChange={handleEditChange} required>
-  //                   <option value="employee">Employee</option>
-  //                   <option value="admin">Admin</option>
-  //                 </select>
-  //                 <input name="password" value={editForm.password} onChange={handleEditChange} placeholder="New Password (optional)" />
-  //                 <button type="submit">Save</button>
-  //                 <button type="button" onClick={handleCancelEdit}>Cancel</button>
-  //               </form>
-  //             ) : (
-  //               <>
-  //                 <span>{emp.name} ({emp.email})</span>
-  //                 <div>
-  //                   <button onClick={() => handleEditClick(emp)} className="icon-btn">
-  //                     <EditOutlinedIcon fontSize="small" />
-  //                   </button>
-  //                   <button onClick={() => handleDelete(emp.id, emp.name)} className="icon-btn">
-  //                     <DeleteForeverOutlinedIcon fontSize="small" />
-  //                   </button>
-  //                 </div>
-  //               </>
-  //             )}
-  //           </li>
-  //         ))
-  //       ) : (
-  //         <li>No Employees found.</li>
-  //       )}
-  //     </ul>
-  //   </div>
-  // );
 };
 
 export default EmployeeList;

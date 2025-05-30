@@ -33,7 +33,7 @@ function AdminDashboard() {
 
   const fetchAttendanceLogs = async () => {
     try {
-      const res = await fetch(`${BASE_URL}/api/admin/attendance`, {
+      const res = await fetch(`${BASE_URL}/admin/attendance`, {
         headers: {
           Authorization : `Bearer ${token}`
         }
@@ -47,7 +47,7 @@ function AdminDashboard() {
 
   const fetchSummary = async () => {
     try {
-      const res = await fetch(`${BASE_URL}/api/admin/summary`, {
+      const res = await fetch(`${BASE_URL}/admin/summary`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
